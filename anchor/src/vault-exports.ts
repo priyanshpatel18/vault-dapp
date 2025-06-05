@@ -1,0 +1,28 @@
+// Here we export some useful types and functions for interacting with the Anchor program.
+import { AnchorProvider, Program } from '@coral-xyz/anchor'
+import { Cluster, PublicKey } from '@solana/web3.js'
+import VaultIDL from '../target/idl/vault_dapp.json'
+import type { VaultDapp } from '../target/types/vault_dapp'
+
+// Re-export the generated IDL and type
+export { VaultDapp, VaultIDL }
+
+// The programId is imported from the program IDL.
+export const BASIC_PROGRAM_ID = new PublicKey(VaultIDL.address)
+
+// This is a helper function to get the Basic Anchor program.
+export function getBasicProgram(provider: AnchorProvider, address?: PublicKey): Program<VaultDapp> {
+  return new Program({ ...VaultIDL, address: address ? address.toBase58() : VaultIDL.address } as VaultDapp, provider)
+}
+
+export function getBasicProgramId(cluster: Cluster) {
+  switch (cluster) {
+    case 'devnet':
+      return new PublicKey("2HBN2FKDHHe88xMNBwkKm234Yyd86v3jzeBcQvcMc2Fm")
+    case 'testnet':
+      return new PublicKey('2HBN2FKDHHe88xMNBwkKm234Yyd86v3jzeBcQvcMc2Fm')
+    case 'mainnet-beta':
+    default:
+      return BASIC_PROGRAM_ID
+  }
+}

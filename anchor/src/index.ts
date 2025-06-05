@@ -1,1 +1,1 @@
-export * from './basic-exports'
+export * from './vault-exports'
