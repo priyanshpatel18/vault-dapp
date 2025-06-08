@@ -4,7 +4,7 @@ import { siteConfig } from '@/config/siteConfig'
 import React from 'react'
 import './globals.css'
 
-export const metadata = siteConfig;
+export const metadata = siteConfig
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

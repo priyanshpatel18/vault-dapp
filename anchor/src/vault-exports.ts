@@ -11,14 +11,14 @@ export { VaultDapp, VaultIDL }
 export const BASIC_PROGRAM_ID = new PublicKey(VaultIDL.address)
 
 // This is a helper function to get the Basic Anchor program.
-export function getBasicProgram(provider: AnchorProvider, address?: PublicKey): Program<VaultDapp> {
+export function getVaultProgram(provider: AnchorProvider, address?: PublicKey): Program<VaultDapp> {
   return new Program({ ...VaultIDL, address: address ? address.toBase58() : VaultIDL.address } as VaultDapp, provider)
 }
 
-export function getBasicProgramId(cluster: Cluster) {
+export function getVaultProgramId(cluster: Cluster) {
   switch (cluster) {
     case 'devnet':
-      return new PublicKey("2HBN2FKDHHe88xMNBwkKm234Yyd86v3jzeBcQvcMc2Fm")
+      return new PublicKey('2HBN2FKDHHe88xMNBwkKm234Yyd86v3jzeBcQvcMc2Fm')
     case 'testnet':
       return new PublicKey('2HBN2FKDHHe88xMNBwkKm234Yyd86v3jzeBcQvcMc2Fm')
     case 'mainnet-beta':

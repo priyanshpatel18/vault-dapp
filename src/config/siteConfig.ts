@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 
 const { title, description, ogImage, baseURL } = {
   title: 'Kosha – Secure Vault for Solana',
-  description: 'Kosha is a secure and decentralized vault dApp built on Solana, enabling fast and trustless storage of digital assets.',
+  description:
+    'Kosha is a secure and decentralized vault dApp built on Solana, enabling fast and trustless storage of digital assets.',
   baseURL: 'https://kosha.priyanshpatel.com',
   ogImage: `https://kosha.priyanshpatel.com/open-graph.png`,
 }

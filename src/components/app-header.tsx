@@ -1,7 +1,7 @@
-import { bricolage } from "@/fonts/bricolage";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { ClusterUiSelect } from "./cluster/cluster-ui";
-import { WalletButton } from "./solana/solana-provider";
+import { bricolage } from '@/fonts/bricolage'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { ClusterUiSelect } from './cluster/cluster-ui'
+import { WalletButton } from './solana/solana-provider'
 
 export default function AppHeader() {
   const { connected } = useWallet()
@@ -21,5 +21,5 @@ export default function AppHeader() {
         )}
       </div>
     </header>
-  );
+  )
 }

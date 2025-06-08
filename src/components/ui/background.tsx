@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import { useEffect, useRef, useState } from 'react';
-import FOG from 'vanta/src/vanta.halo';
-import * as THREE from 'three';
+import { useEffect, useRef, useState } from 'react'
+import FOG from 'vanta/src/vanta.halo'
+import * as THREE from 'three'
 
 export default function BackgroundHalo() {
-  const [vantaEffect, setVantaEffect] = useState(0);
-  const vantaRef = useRef(null);
+  const [vantaEffect, setVantaEffect] = useState(0)
+  const vantaRef = useRef(null)
 
   useEffect(() => {
     if (!vantaEffect) {
@@ -22,13 +22,13 @@ export default function BackgroundHalo() {
           scale: 1.0,
           scaleMobile: 1.0,
           size: 1,
-          baseColor: "#080808",
-          highlightColor: "#181818",
-          midtoneColor: "#282828",
-        })
-      );
+          baseColor: '#080808',
+          highlightColor: '#181818',
+          midtoneColor: '#282828',
+        }),
+      )
     }
-  }, [vantaEffect]);
+  }, [vantaEffect])
 
   return (
     <div
@@ -60,5 +60,5 @@ export default function BackgroundHalo() {
         }}
       />
     </div>
-  );
+  )
 }
