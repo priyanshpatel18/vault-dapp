@@ -18,9 +18,9 @@ export function getVaultProgram(provider: AnchorProvider, address?: PublicKey): 
 export function getVaultProgramId(cluster: Cluster) {
   switch (cluster) {
     case 'devnet':
-      return new PublicKey('2HBN2FKDHHe88xMNBwkKm234Yyd86v3jzeBcQvcMc2Fm')
+      return new PublicKey('GSXQcU2nrxRCRXZ3QXZDzuyBMCT4B13rtSBS88nzKmm4')
     case 'testnet':
-      return new PublicKey('2HBN2FKDHHe88xMNBwkKm234Yyd86v3jzeBcQvcMc2Fm')
+      return new PublicKey('GSXQcU2nrxRCRXZ3QXZDzuyBMCT4B13rtSBS88nzKmm4')
     case 'mainnet-beta':
     default:
       return BASIC_PROGRAM_ID

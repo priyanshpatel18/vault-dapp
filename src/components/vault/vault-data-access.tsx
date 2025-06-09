@@ -91,6 +91,105 @@ export function useVaultProgram() {
   }
 }
 
+export function useVaultProgramAccount() {
+  const { cluster } = useCluster();
+  const { program } = useVaultProgram()
+  const wallet = useWallet();
+
+  const lockVault = useMutation({
+    mutationKey: ['lock-vault', { cluster }],
+    mutationFn: async ({ account }: { account: PublicKey }) => {
+      if (!program) throw new Error('Program not initialized')
+
+      if (!wallet?.publicKey) throw new Error("Wallet not connected")
+
+      const [userStatePda] = await getUserStatePda(wallet.publicKey, program.programId);
+      try {
+        await program.account.userState.fetch(userStatePda)
+      } catch {
+        throw new Error("User state PDA not found")
+      }
+
+      let vault;
+      try {
+        vault = await program.account.vaultState.fetch(account)
+      } catch {
+        throw new Error("Vault state PDA not found")
+      }
+
+      const tx = await program.methods
+        .lock(new BN(vault.vaultId))
+        .accounts({
+          owner: wallet.publicKey,
+          vault: account,
+          userState: userStatePda,
+        })
+        .rpc()
+
+      return tx
+    },
+    onSuccess: (signature: string) => {
+      const showToast = TransactionToast("Transaction successful!", cluster.name);
+      showToast(signature);
+    },
+    onError: (error) => {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+      console.error(error);
+    },
+  })
+
+  const unlockVault = useMutation({
+    mutationKey: ['lock-vault', { cluster }],
+    mutationFn: async ({ account }: { account: PublicKey }) => {
+      if (!program) throw new Error('Program not initialized')
+
+      if (!wallet?.publicKey) throw new Error("Wallet not connected")
+
+      const [userStatePda] = await getUserStatePda(wallet.publicKey, program.programId);
+      try {
+        await program.account.userState.fetch(userStatePda)
+      } catch {
+        throw new Error("User state PDA not found")
+      }
+
+      let vault;
+      try {
+        vault = await program.account.vaultState.fetch(account)
+      } catch {
+        throw new Error("Vault state PDA not found")
+      }
+
+      const tx = await program.methods
+        .unlock(new BN(vault.vaultId))
+        .accounts({
+          owner: wallet.publicKey,
+          vault: account,
+          userState: userStatePda,
+        })
+        .rpc()
+
+      return tx
+    },
+    onSuccess: (signature: string) => {
+      const showToast = TransactionToast("Transaction successful!", cluster.name);
+      showToast(signature);
+    },
+    onError: (error) => {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+      console.error(error);
+    },
+  })
+
+  return {
+    lockVault,
+    unlockVault
+  }
+}
+
 // -----HELPERS -----
 export const getUserStatePda = async (userPubkey: PublicKey, programId: PublicKey) => {
   return await PublicKey.findProgramAddress([Buffer.from('user_state'), userPubkey.toBuffer()], programId)

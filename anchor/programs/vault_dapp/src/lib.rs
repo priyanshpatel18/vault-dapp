@@ -7,7 +7,7 @@ pub mod states;
 
 use instructions::*;
 
-declare_id!("2HBN2FKDHHe88xMNBwkKm234Yyd86v3jzeBcQvcMc2Fm");
+declare_id!("GSXQcU2nrxRCRXZ3QXZDzuyBMCT4B13rtSBS88nzKmm4");
 
 #[program]
 pub mod vault_dapp {

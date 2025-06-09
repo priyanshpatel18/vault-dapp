@@ -50,6 +50,7 @@ impl Initialize<'_> {
         self.vault.created_at = Clock::get()?.unix_timestamp;
         self.vault.name = name;
         self.vault.description = description;
+        self.vault.vault_id = current_vault_count + 1;
 
         require!(
             self.user_state.vault_count < MAX_VAULTS_PER_USER,

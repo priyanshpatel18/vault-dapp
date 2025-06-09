@@ -3,6 +3,7 @@ use anchor_lang::prelude::*;
 #[account]
 #[derive(InitSpace)]
 pub struct VaultState {
+    pub vault_id: u64,
     pub owner: Pubkey,
     pub is_locked: bool,
     pub created_at: i64,

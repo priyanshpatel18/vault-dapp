@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { XIcon } from "lucide-react";
+import { Lock, XIcon } from "lucide-react";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
-import { useVaultProgram } from "./vault-data-access";
+import { useVaultProgram, useVaultProgramAccount } from "./vault-data-access";
 
 interface VaultCreateModalProps {
   isOpen: boolean;
@@ -88,6 +88,7 @@ export default function VaultCreateModal({
 
 export function Vaults({ setPanelOpen }: { setPanelOpen: Dispatch<SetStateAction<boolean>> }) {
   const { totalVaults } = useVaultProgram()
+  const { lockVault, unlockVault } = useVaultProgramAccount()
   const userVaults = useMemo(() => totalVaults.data, [totalVaults.data]);
 
   return userVaults && userVaults.length > 0 ? (
@@ -98,7 +99,12 @@ export function Vaults({ setPanelOpen }: { setPanelOpen: Dispatch<SetStateAction
           className="rounded-2xl bg-card shadow-sm p-6 border border-border flex flex-col gap-4 transition hover:shadow-md"
         >
           <div>
-            <h2 className="text-xl font-semibold text-foreground">{vault.account.name}</h2>
+            <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+              {vault.account.name}
+              {vault.account.isLocked && (
+                <Lock className="w-3.5 h-3.5 text-muted-foreground" />
+              )}
+            </h2>
             <p className="text-sm text-muted-foreground line-clamp-2">
               {vault.account.description || 'No description provided.'}
             </p>
@@ -114,10 +120,16 @@ export function Vaults({ setPanelOpen }: { setPanelOpen: Dispatch<SetStateAction
             <button className="rounded-lg bg-gradient-to-br from-green-500 to-emerald-400 text-white px-3 py-2 text-sm font-medium hover:brightness-105 transition">
               Withdraw
             </button>
-            <button className="rounded-lg bg-gradient-to-br from-yellow-400 to-amber-400 text-white px-3 py-2 text-sm font-medium hover:brightness-105 transition">
+            <button
+              onClick={() => lockVault.mutateAsync({ account: vault.publicKey })}
+              className="rounded-lg bg-gradient-to-br from-yellow-400 to-amber-400 text-white px-3 py-2 text-sm font-medium hover:brightness-105 transition"
+            >
               Lock
             </button>
-            <button className="rounded-lg bg-gradient-to-br from-orange-400 to-red-400 text-white px-3 py-2 text-sm font-medium hover:brightness-105 transition">
+            <button
+              onClick={() => unlockVault.mutateAsync({ account: vault.publicKey })}
+              className="rounded-lg bg-gradient-to-br from-orange-400 to-red-400 text-white px-3 py-2 text-sm font-medium hover:brightness-105 transition"
+            >
               Unlock
             </button>
             <button className="col-span-2 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-white px-3 py-2 text-sm font-medium hover:brightness-105 transition">

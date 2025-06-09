@@ -1,5 +1,5 @@
 {
-  "address": "2HBN2FKDHHe88xMNBwkKm234Yyd86v3jzeBcQvcMc2Fm",
+  "address": "GSXQcU2nrxRCRXZ3QXZDzuyBMCT4B13rtSBS88nzKmm4",
   "metadata": {
     "name": "vault_dapp",
     "version": "0.1.0",
@@ -681,6 +681,10 @@
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "vault_id",
+            "type": "u64"
+          },
           {
             "name": "owner",
             "type": "pubkey"
